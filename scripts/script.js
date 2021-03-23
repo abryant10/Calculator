@@ -4,6 +4,7 @@ const pointButton = document.querySelector("[data-point]");
 const operatorButton = document.querySelectorAll('[data-operator]');
 const equalButton = document.querySelector("[data-equal]");
 const clearButton = document.querySelector("[data-clear]");
+const percentButton = document.querySelector('[data-percent]');
 let firstMathNumber = "";
 let secondMathNumber = "";
 let currentOperator = "";
@@ -23,7 +24,10 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return a / b;
+    if (b === 0) {
+        return "hmm... try again";
+    } else {return a / b;
+    }
 }
 
 function doMath(operator, a, b) {
@@ -32,16 +36,12 @@ function doMath(operator, a, b) {
     switch(operator) {
         case '+':
             return add(a, b);
-            break;
         case '-':
             return subtract(a, b);
-            break;
         case 'x':
             return multiply(a, b);
-            break;
-        case '/':
+        case '÷':
             return divide(a, b);
-            break;
     }
 }
 
@@ -50,7 +50,7 @@ function appendNumber (number) {
     if (display.innerHTML === '0') {
         display.textContent = number;
         numberReel.push(number);
-    } else if (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "/" || numberReel[i] == "%"){
+    } else if (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%"){
         display.textContent = number;
         numberReel.push(number);
     }else if (numberReel[i] == "=") {
@@ -61,14 +61,12 @@ function appendNumber (number) {
         display.textContent += number;
         numberReel.push(number);
     }
-    console.log(numberReel);
 }
 
 function appendPoint () {
     if (display.textContent.includes(".")) return;
     display.textContent += ".";
     numberReel.push(".");
-    console.log(numberReel);
 }
 
 function appendOperator (operator) {
@@ -78,44 +76,60 @@ function appendOperator (operator) {
             firstMathNumber = display.textContent;
             currentOperator = operator;
             numberReel.push(operator);
-        } else {
-        secondMathNumber = display.textContent;
-        display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
-        currentOperator = operator;
-        firstMathNumber = display.textContent;
-        numberReel.push(operator);
+        } else if (currentOperator !== operator && (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%")){
+            currentOperator = operator;
+            numberReel.push(currentOperator);
+            return; 
+        }else {
+            secondMathNumber = display.textContent;
+            display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
+            currentOperator = operator;
+            firstMathNumber = display.textContent;
+            numberReel.push(operator);
         }
     }else {
-    firstMathNumber = display.textContent;
-    currentOperator = operator;
-    numberReel.push(operator);
+        firstMathNumber = display.textContent;
+        currentOperator = operator;
+        numberReel.push(operator);
     }
 }
 
 function equalClicked () {
     var i = (numberReel.length -1)
-    if (currentOperator = ""){
-        console.log('hello1')
+    if (!currentOperator){
         return;
     }else {
-    if (numberReel[i] === "=") {
-        firstMathNumber = display.textContent;
-        display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
-        numberReel.push("=");
-        console.log(numberReel);
-        console.log('hello2');
-    } else {
-        secondMathNumber = display.textContent;
-        display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
-        numberReel.push("=");
-        console.log(numberReel);
-        console.log('hello3')
+        if (numberReel[i] === "=") {
+            firstMathNumber = display.textContent;
+            display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
+            numberReel.push("=");
+        } else {
+            secondMathNumber = display.textContent;
+            display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
+            numberReel.push("=");
         }
     }
 }
 
-function clears () {
+function percentClicked () {
+    if (!currentOperator) {
+        firstMathNumber = display.textContent;
+        display.textContent = (firstMathNumber / 100);
+        numberReel.push(display.textContent);
+        //numberReel.push('%')
+    }else if (currentOperator === "x" || currentOperator === "÷"){
+        secondMathNumber = display.textContent;
+        display.textContent = ((firstMathNumber * secondMathNumber)/ 100);
+        //numberReel.push("%");
+    }
+}
 
+function clears () {
+firstMathNumber = "";
+secondMathNumber = "";
+currentOperator = "";
+numberReel = [];
+display.textContent = "0";
 }
 
 numberButton.forEach((button) => button.addEventListener("click", () => appendNumber(button.textContent)));
@@ -123,21 +137,14 @@ pointButton.addEventListener("click", appendPoint);
 equalButton.addEventListener("click", equalClicked);
 operatorButton.forEach((button) => button.addEventListener("click", () => appendOperator(button.textContent)));
 clearButton.addEventListener("click", clears);
+percentButton.addEventListener("click", percentClicked);
 
 
 
-// // not working
-// function equalClicked () {
-//     //console.log(numberReel);
-//     // if (numberReel[(numberReel.length -1)] == "=") {
-//     //     firstMathNumber = secondMathNumber;
-//     //     secondMathNumber = display.textContent;
-//     //     display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
-//     //     numberReel.push("=");
-//     // } else {
-//     display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
-//     //numberReel.push("=");
-//     currentOperator = "";
-//     console.log(numberReel);
-//     //}
-// }
+// partyBtn.onclick = function(){
+//     if (firstOperandSpan.textContent != '' && operatorSpan.textContent != '' && secondOperandSpan.textContent != ''){
+//         if (operatorSpan.textContent == '+' || operatorSpan.textContent == '-'){
+//         let alc  = parseFloat(firstOperandSpan.textContent) * parseFloat(secondOperandSpan.textContent);
+//         secondOperandSpan.textContent = `${alc / 100}`;
+//         eqlBtn.click();
+//     } else {
