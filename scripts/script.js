@@ -131,6 +131,15 @@ currentOperator = "";
 numberReel = [];
 display.textContent = "0";
 }
+ 
+function keyMaping (e) {
+    if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
+    if (e.key === ".") appendPoint();
+    if (e.key === "Escape") clears ();
+    if (e.key === "=" || e.key == "Enter") equalClicked();
+    if (e.key === "+" || e.key === "_" || e.key === "*" || e.key === "/") 
+        appendOperator(convertOperator(e.key));
+}
 
 numberButton.forEach((button) => button.addEventListener("click", () => appendNumber(button.textContent)));
 pointButton.addEventListener("click", appendPoint);
@@ -138,6 +147,7 @@ equalButton.addEventListener("click", equalClicked);
 operatorButton.forEach((button) => button.addEventListener("click", () => appendOperator(button.textContent)));
 clearButton.addEventListener("click", clears);
 percentButton.addEventListener("click", percentClicked);
+window.addEventListener("keydown", keyMaping);
 
 
 

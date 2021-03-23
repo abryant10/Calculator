@@ -1,46 +1,110 @@
 body {
+    height: 100vw;
+    width: 80vw;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 200%;
     text-align: center;
+    background-image: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(189, 189, 189), rgb(0, 0, 0));
+    background-repeat: no-repeat;
 }
 .calcContainer {
 display: grid;
-grid-template-rows: 25% 60% 15% ;
+grid-template-rows: 80% 20%;
 border: 2px solid rgb(107, 107, 107);
+border-bottom-left-radius: 22px;
+border-bottom-right-radius: 22px;
 margin-left: auto;
 margin-right: auto;
-margin-top:  10%;
 width: 300px;
-height: 400px;
+height: 350px;
 }
 .rowOneThroughFour {
 display: grid;
 grid-template-columns: 25% 25% 25% 25%;
+background-color: rgb(168, 168, 168);
+column-gap: 0px;
 }
 
 .rowFiveContainer {
     display: grid;
     grid-template-columns: 50% 50%;
+    background-color: rgb(168, 168, 168);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
 }
 .rowFiveLeft {
     display: grid;
-    grid-template-columns: 100%
+    grid-template-columns: 100%;
 }
 .rowFiveRight {
     display: grid;
     grid-template-columns: 50% 50%;
 }
 .button {
-
+    outline: none;
+    background-color: transparent;
+    border: 1px solid rgb(99, 99, 99);
+    color: white;
+    font-size: 25px;
 }
-.buttonNumber {
-
+.button:active {
+    background-color: rgb(190, 190, 190);
 }
-.buttonOper {
-    
+.buttonZero {
+    background-color: transparent;
+    border: 1px solid rgb(99, 99, 99);
+    border-bottom-left-radius: 20px;
+    color: white;
+font-size: 25px;
+outline: none;
+    }
+    .buttonZero:active {
+        background-color: rgb(190, 190, 190);
+    }
+.buttonEq {
+    background-color: transparent;
+    border: 1px solid rgb(99, 99, 99);
+    border-bottom-right-radius: 20px;
+    color: white;
+font-size: 25px;
+outline: none;
+}
+.buttonEq:active {
+    background-color: rgb(190, 190, 190);
+}
+
+.buttonOp {
+    background-color: rgb(49, 112, 247);
+    border: 1px solid rgb(99, 99, 99);
+    color: white;
+    font-size: 25px;
+    outline: none;
+}
+.buttonOp:active {
+    background-color: rgb(107, 153, 252);
+}
+.displayContainer {
+    text-align: right;
+    text-align: end;    
+    color: white;
+    width: 300px;
+    min-height: 80px;
+    max-width: 300px;
+    background-color: rgb(70, 70, 70);
+    border: 2px solid rgb(107, 107, 107);
+    border-bottom: none;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    text-align: right;
+    word-wrap: break-word;
+    word-break: break-all;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    font-size: 50px;
 }
 .display {
-text-align: end;
-padding-top: 20%;
-padding-right: 2%;
+    padding: 15px;
 }
+
