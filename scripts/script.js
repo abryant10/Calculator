@@ -35,15 +35,19 @@ function doMath(operator, a, b) {
     b = Number(b);
     switch(operator) {
         case '+':
-            return add(a, b);
+            return roundResult(add(a, b));
         case '-':
-            return subtract(a, b);
+            return roundResult(subtract(a, b));
         case 'x':
-            return multiply(a, b);
+            return roundResult(multiply(a, b));
         case '÷':
-            return divide(a, b);
+            return roundResult(divide(a, b));
     }
 }
+function roundResult(number) {
+    return Math.round(number * 1000000) / 1000000;
+  }
+  
 
 function appendNumber (number) {
     var i = (numberReel.length -1);
@@ -64,15 +68,20 @@ function appendNumber (number) {
 }
 
 function appendPoint () {
+    var i = (numberReel.length -1);
     if (display.textContent.includes(".")) return;
+    if (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%" || numberReel[i] === "=") {
+        display.textContent = "0.";
+        numberReel.push("0.")
+    } else {
     display.textContent += ".";
     numberReel.push(".");
-}
+}}
 
 function appendOperator (operator) {
     var i = (numberReel.length -1)
     if (currentOperator !== "") {
-        if (numberReel[i] === "=" || numberReel[i] === operator) {
+        if (numberReel[i] === "=" || numberReel[i] === operator || numberReel[i] === "%") {
             firstMathNumber = display.textContent;
             currentOperator = operator;
             numberReel.push(operator);
@@ -116,11 +125,22 @@ function percentClicked () {
         firstMathNumber = display.textContent;
         display.textContent = (firstMathNumber / 100);
         numberReel.push(display.textContent);
-        //numberReel.push('%')
+        numberReel.push("%")
     }else if (currentOperator === "x" || currentOperator === "÷"){
         secondMathNumber = display.textContent;
         display.textContent = ((firstMathNumber * secondMathNumber)/ 100);
-        //numberReel.push("%");
+        numberReel.push(display.textContent);
+        numberReel.push("%");
+    }else if (currentOperator === "+") {
+        secondMathNumber = display.textContent;
+        display.textContent = (Number(firstMathNumber) + Number((firstMathNumber * (secondMathNumber/100))))
+        numberReel.push(display.textContent);
+        numberReel.push("%");
+    } else if (currentOperator === "-") {
+        secondMathNumber = display.textContent;
+        display.textContent = (firstMathNumber - (firstMathNumber * (secondMathNumber/100)))
+        numberReel.push(display.textContent);
+        numberReel.push('%')
     }
 }
 
@@ -137,9 +157,16 @@ function keyMaping (e) {
     if (e.key === ".") appendPoint();
     if (e.key === "Escape") clears ();
     if (e.key === "=" || e.key == "Enter") equalClicked();
-    if (e.key === "+" || e.key === "_" || e.key === "*" || e.key === "/") 
+    if (e.key === "%") percentClicked();
+    if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") 
         appendOperator(convertOperator(e.key));
 }
+function convertOperator(keyboardOperator) {
+    if (keyboardOperator === "/") return "÷";
+    if (keyboardOperator === "*") return "x";
+    if (keyboardOperator === "-") return "-";
+    if (keyboardOperator === "+") return "+";
+  }
 
 numberButton.forEach((button) => button.addEventListener("click", () => appendNumber(button.textContent)));
 pointButton.addEventListener("click", appendPoint);
@@ -148,13 +175,4 @@ operatorButton.forEach((button) => button.addEventListener("click", () => append
 clearButton.addEventListener("click", clears);
 percentButton.addEventListener("click", percentClicked);
 window.addEventListener("keydown", keyMaping);
-
-
-
-// partyBtn.onclick = function(){
-//     if (firstOperandSpan.textContent != '' && operatorSpan.textContent != '' && secondOperandSpan.textContent != ''){
-//         if (operatorSpan.textContent == '+' || operatorSpan.textContent == '-'){
-//         let alc  = parseFloat(firstOperandSpan.textContent) * parseFloat(secondOperandSpan.textContent);
-//         secondOperandSpan.textContent = `${alc / 100}`;
-//         eqlBtn.click();
-//     } else {
+window.addEventListener("click", console.log(numberReel));

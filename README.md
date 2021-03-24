@@ -1,18 +1,10 @@
 # Calculator
 a web calculator
 
-
-
-
-
-
-You should round answers with long decimals so that they don’t overflow the screen.
-
 EXTRA CREDIT: Add a “backspace” button, so the user can undo if they click the wrong number. or basically make AC work like apple calc with C and AC
 
-EXTRA CREDIT: Add keyboard support! (percent)
+operator after usinbg 0. not working
 
-make percent work
 
 make +/- work
 
