@@ -1,29 +1,30 @@
 body {
-    height: 100vw;
+    height: 150vw;
     width: 80vw;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 200%;
     text-align: center;
-    background-image: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(189, 189, 189));
+    background-image: linear-gradient(to bottom right, rgb(78, 78, 78), rgb(255, 255, 255));
     background-repeat: no-repeat;
+    margin: 0 auto;
+    filter: drop-shadow(20px 15px 15px #1f1f1f);
 }
 .calcContainer {
-display: grid;
-grid-template-rows: 80% 20%;
-border: 2px solid rgb(107, 107, 107);
-border-bottom-left-radius: 22px;
-border-bottom-right-radius: 22px;
-margin: 0 auto;
-width: 300px;
-height: 350px;
+    display: grid;
+    grid-template-rows: 80% 20%;
+    border: 2px solid rgb(107, 107, 107);
+    border-bottom-left-radius: 22px;
+    border-bottom-right-radius: 22px;
+    margin: 0 auto;
+    width: 300px;
+    height: 350px;
 }
 .rowOneThroughFour {
-display: grid;
-grid-template-columns: 25% 25% 25% 25%;
-background-color: rgb(168, 168, 168);
-column-gap: 0px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    background-color: rgb(168, 168, 168);
+    column-gap: 0px;
 }
-
 .rowFiveContainer {
     display: grid;
     grid-template-columns: 50% 50%;
@@ -55,24 +56,23 @@ column-gap: 0px;
     border: 1px solid rgb(99, 99, 99);
     border-bottom-left-radius: 20px;
     color: white;
-font-size: 25px;
-outline: none;
+    font-size: 25px;
+    outline: none;
     }
-    .buttonZero:active {
-        background-color: rgb(190, 190, 190);
+.buttonZero:active {
+    background-color: rgb(190, 190, 190);
     }
 .buttonEq {
-    background-color: transparent;
+    background-color: rgb(49, 112, 247);
     border: 1px solid rgb(99, 99, 99);
     border-bottom-right-radius: 20px;
     color: white;
-font-size: 25px;
-outline: none;
+    font-size: 25px;
+    outline: none;
 }
 .buttonEq:active {
     background-color: rgb(190, 190, 190);
 }
-
 .buttonOp {
     background-color: rgb(49, 112, 247);
     border: 1px solid rgb(99, 99, 99);
@@ -82,6 +82,16 @@ outline: none;
 }
 .buttonOp:active {
     background-color: rgb(107, 153, 252);
+}
+.buttonOpTop {
+    background-color: rgb(105, 149, 245);
+    border: 1px solid rgb(99, 99, 99);
+    color: white;
+    font-size: 25px;
+    outline: none;
+}
+.buttonOpTop:active {
+    background-color: rgb(152, 183, 248);
 }
 .displayContainer {
     text-align: right;
@@ -99,10 +109,12 @@ outline: none;
     word-wrap: break-word;
     word-break: break-all;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 40px;
     font-size: 50px;
 }
 .display {
     padding: 15px;
 }
 
+
+ 

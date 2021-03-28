@@ -5,6 +5,7 @@ const operatorButton = document.querySelectorAll('[data-operator]');
 const equalButton = document.querySelector("[data-equal]");
 const clearButton = document.querySelector("[data-clear]");
 const percentButton = document.querySelector('[data-percent]');
+const plusNegative = document.querySelector('[data-plusNegative]');
 let firstMathNumber = "";
 let secondMathNumber = "";
 let currentOperator = "";
@@ -161,12 +162,17 @@ function keyMaping (e) {
     if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") 
         appendOperator(convertOperator(e.key));
 }
+
 function convertOperator(keyboardOperator) {
     if (keyboardOperator === "/") return "÷";
     if (keyboardOperator === "*") return "x";
     if (keyboardOperator === "-") return "-";
     if (keyboardOperator === "+") return "+";
-  }
+}
+
+function doPlusNegative () {
+    display.textContent  = (-(display.textContent));
+}
 
 numberButton.forEach((button) => button.addEventListener("click", () => appendNumber(button.textContent)));
 pointButton.addEventListener("click", appendPoint);
@@ -174,5 +180,6 @@ equalButton.addEventListener("click", equalClicked);
 operatorButton.forEach((button) => button.addEventListener("click", () => appendOperator(button.textContent)));
 clearButton.addEventListener("click", clears);
 percentButton.addEventListener("click", percentClicked);
+plusNegative.addEventListener("click", doPlusNegative);
 window.addEventListener("keydown", keyMaping);
 window.addEventListener("click", console.log(numberReel));
