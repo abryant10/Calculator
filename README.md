@@ -5,4 +5,4 @@ EXTRA CREDIT: Add a “backspace” button, so the user can undo if they click t
 
 fix moblie sizing
 
-clean up js code, add commentsss
+clean up js code, add comments

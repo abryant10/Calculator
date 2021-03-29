@@ -12,7 +12,7 @@ body {
 .calcContainer {
     display: grid;
     grid-template-rows: 80% 20%;
-    border: 2px solid rgb(107, 107, 107);
+    border: 1px solid rgb(107, 107, 107);
     border-bottom-left-radius: 22px;
     border-bottom-right-radius: 22px;
     margin: 0 auto;
@@ -31,7 +31,6 @@ body {
     background-color: rgb(168, 168, 168);
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-
 }
 .rowFiveLeft {
     display: grid;
@@ -122,8 +121,9 @@ body {
         width: 80vw;    
     }
     .calcContainer {
-        width: 600px;
-        height: 700px;
+        width: 700px;
+        height: 800px;
+        border: 1px solid rgb(107, 107, 107);
     }
     .button {
         font-size: 50px;
@@ -141,9 +141,9 @@ body {
         font-size: 50px;
     }
     .displayContainer {
-        width: 600px;
-        min-height: 160px;
-        max-width: 600px;
+        width: 700px;
+        min-height: 200px;
+        max-width: 700px;
         margin-top: 160px;
         font-size: 100px;
     }
