@@ -116,5 +116,36 @@ body {
     padding: 15px;
 }
 
-
+@media only screen and (max-device-width: 480px) {
+    body {
+        height: 200vw;
+        width: 80vw;    
+    }
+    .calcContainer {
+        width: 600px;
+        height: 700px;
+    }
+    .button {
+        font-size: 50px;
+    }
+    .buttonOp {
+        font-size: 50px;
+    }
+    .buttonOpTop {
+        font-size: 50px;
+    }
+    .buttonEq {
+        font-size: 50px;
+    }
+    .buttonZero {
+        font-size: 50px;
+    }
+    .displayContainer {
+        width: 600px;
+        min-height: 160px;
+        max-width: 600px;
+        margin-top: 160px;
+        font-size: 100px;
+    }
+}
  

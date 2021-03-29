@@ -9,6 +9,7 @@ const plusNegative = document.querySelector('[data-plusNegative]');
 let firstMathNumber = "";
 let secondMathNumber = "";
 let currentOperator = "";
+let equalWasLast = false;
 
 let numberReel = [];
 
@@ -70,7 +71,14 @@ function appendNumber (number) {
 
 function appendPoint () {
     var i = (numberReel.length -1);
-    if (display.textContent.includes(".")) return;
+    if (display.textContent.includes(".")) {
+        if (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%" || numberReel[i] === "=") {
+            display.textContent = "0.";
+            numberReel.push("0.")
+        } else {
+            return;
+        }
+    }
     if (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%" || numberReel[i] === "=") {
         display.textContent = "0.";
         numberReel.push("0.")
@@ -81,10 +89,11 @@ function appendPoint () {
 
 function appendOperator (operator) {
     var i = (numberReel.length -1)
-    if (currentOperator !== "") {
-        if (numberReel[i] === "=" || numberReel[i] === operator || numberReel[i] === "%") {
+    if (currentOperator !== "") { // if display conatins cant do 6+6=12 0.3 +  maybe make a first operator variable that is created on new math and removed on 
+        if (numberReel[i] === "=" || numberReel[i] === operator || numberReel[i] === "%" || equalWasLast == true) {
             firstMathNumber = display.textContent;
             currentOperator = operator;
+            equalWasLast = false;
             numberReel.push(operator);
         } else if (currentOperator !== operator && (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%")){
             currentOperator = operator;
@@ -116,6 +125,7 @@ function equalClicked () {
         } else {
             secondMathNumber = display.textContent;
             display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
+            equalWasLast = true;
             numberReel.push("=");
         }
     }
