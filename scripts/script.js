@@ -9,9 +9,13 @@ const plusNegative = document.querySelector('[data-plusNegative]');
 let firstMathNumber = "";
 let secondMathNumber = "";
 let currentOperator = "";
-let equalWasLast = false;
+let equalWasLast = false; // this variable fixes the issue of an operator doing math 
+                          // prematurly when using a decimal after doing other math first.
 
-let numberReel = [];
+
+let numberReel = []; // this array keeps a chronological log of calculator input to let 
+                     // the operators and equal sign act diffently depending 
+                     // what what the last thing to happen was.
 
 function add(a, b) {
     return a + b;
@@ -46,25 +50,27 @@ function doMath(operator, a, b) {
             return roundResult(divide(a, b));
     }
 }
+
 function roundResult(number) {
     return Math.round(number * 1000000) / 1000000;
-  }
+}
   
-
 function appendNumber (number) {
     var i = (numberReel.length -1);
-    if (display.innerHTML === '0') {
-        display.textContent = number;
-        numberReel.push(number);
-    } else if (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%"){
-        display.textContent = number;
-        numberReel.push(number);
-    }else if (numberReel[i] == "=") {
+    if (display.innerHTML == '0' 
+        || numberReel[i] == "+" 
+        || numberReel[i] == "-" 
+        || numberReel[i] == "x" 
+        || numberReel[i] == "÷" 
+        || numberReel[i] == "%"){
+            display.textContent = number;
+            numberReel.push(number);
+    }else if (numberReel[i] == "=") { //for new math
         display.textContent = number;
         currentOperator = "";
         numberReel.push(number);
     }else{
-        display.textContent += number;
+        display.textContent += number; //for multi-digit numbers
         numberReel.push(number);
     }
 }
@@ -72,41 +78,60 @@ function appendNumber (number) {
 function appendPoint () {
     var i = (numberReel.length -1);
     if (display.textContent.includes(".")) {
-        if (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%" || numberReel[i] === "=") {
-            display.textContent = "0.";
-            numberReel.push("0.")
+        if (numberReel[i] == "+" 
+            || numberReel[i] == "-" 
+            || numberReel[i] == "x" 
+            || numberReel[i] == "÷" 
+            || numberReel[i] == "%" 
+            || numberReel[i] == "=") {
+                display.textContent = "0.";
+                numberReel.push("0.")
         } else {
             return;
         }
     }
-    if (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%" || numberReel[i] === "=") {
-        display.textContent = "0.";
-        numberReel.push("0.")
+    if (numberReel[i] == "+" 
+        || numberReel[i] == "-" 
+        || numberReel[i] == "x" 
+        || numberReel[i] == "÷" 
+        || numberReel[i] == "%" 
+        || numberReel[i] == "=") {
+            display.textContent = "0.";
+            numberReel.push("0.")
     } else {
-    display.textContent += ".";
-    numberReel.push(".");
-}}
+        display.textContent += ".";
+        numberReel.push(".");
+    }
+}
 
 function appendOperator (operator) {
     var i = (numberReel.length -1)
-    if (currentOperator !== "") { // if display conatins cant do 6+6=12 0.3 +  maybe make a first operator variable that is created on new math and removed on 
-        if (numberReel[i] === "=" || numberReel[i] === operator || numberReel[i] === "%" || equalWasLast == true) {
-            firstMathNumber = display.textContent;
-            currentOperator = operator;
-            equalWasLast = false;
-            numberReel.push(operator);
-        } else if (currentOperator !== operator && (numberReel[i] == "+" || numberReel[i] == "-" || numberReel[i] == "x" || numberReel[i] == "÷" || numberReel[i] == "%")){
-            currentOperator = operator;
-            numberReel.push(currentOperator);
-            return; 
-        }else {
+    if (currentOperator !== "") {
+        if (numberReel[i] == "=" //allows you to do math on the result of the last equation 
+            || numberReel[i] == operator 
+            || numberReel[i] == "%" 
+            || equalWasLast == true) {
+                firstMathNumber = display.textContent;
+                currentOperator = operator;
+                equalWasLast = false;
+                numberReel.push(operator);
+        } else if (currentOperator !== operator //allows you to switch operators without clearing
+            && (numberReel[i] == "+"            // between the first and second number
+                || numberReel[i] == "-" 
+                || numberReel[i] == "x" 
+                || numberReel[i] == "÷" 
+                || numberReel[i] == "%")){
+                    currentOperator = operator;
+                    numberReel.push(currentOperator);
+                    return; 
+        } else { // allows you to do math without the equal sign 5+5+5=15
             secondMathNumber = display.textContent;
             display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
             currentOperator = operator;
             firstMathNumber = display.textContent;
             numberReel.push(operator);
         }
-    }else {
+    } else { //for 'normal' math situations
         firstMathNumber = display.textContent;
         currentOperator = operator;
         numberReel.push(operator);
@@ -115,14 +140,14 @@ function appendOperator (operator) {
 
 function equalClicked () {
     var i = (numberReel.length -1)
-    if (!currentOperator){
+    if (!currentOperator){ 
         return;
     }else {
-        if (numberReel[i] === "=") {
+        if (numberReel[i] === "=") { //hitting equal twice does the same math again to the result
             firstMathNumber = display.textContent;
             display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
             numberReel.push("=");
-        } else {
+        } else { // normal equal sign function
             secondMathNumber = display.textContent;
             display.textContent = doMath(currentOperator, firstMathNumber, secondMathNumber);
             equalWasLast = true;
@@ -156,11 +181,11 @@ function percentClicked () {
 }
 
 function clears () {
-firstMathNumber = "";
-secondMathNumber = "";
-currentOperator = "";
-numberReel = [];
-display.textContent = "0";
+    firstMathNumber = "";
+    secondMathNumber = "";
+    currentOperator = "";
+    numberReel = [];
+    display.textContent = "0";
 }
  
 function keyMaping (e) {
